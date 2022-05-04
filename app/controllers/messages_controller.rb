@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   def index
    @massage = Massage.new
    @room = Room.find(paramas[:room_id]) 
+   @message = @room.messages.includes(:user)
   end
 
   def create
@@ -10,6 +11,7 @@ class MessagesController < ApplicationController
     if @message.save
  redirect_to_room_massage_path(@room)
  else
+  @message = @room.messages.includes(:user)
   render :index
  end
     end
